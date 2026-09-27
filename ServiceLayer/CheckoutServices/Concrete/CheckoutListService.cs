@@ -35,7 +35,8 @@ namespace ServiceLayer.CheckoutServices.Concrete
             var result = new List<CheckoutItemDto>();
             foreach (var lineItem in lineItems)
             {
-                result.Add(_context.Books.Select(book => new CheckoutItemDto
+                result.Add(_context.Books.AsQueryable()
+                    .Select(book => new CheckoutItemDto
                 {
                     BookId = book.BookId,
                     Title = book.Title,

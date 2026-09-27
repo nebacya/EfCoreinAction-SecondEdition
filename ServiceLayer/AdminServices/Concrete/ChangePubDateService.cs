@@ -20,6 +20,7 @@ namespace ServiceLayer.AdminServices.Concrete
         public ChangePubDateDto GetOriginal(int id)        //#C
         {
             return _context.Books
+                .AsQueryable()
                 .Select(p => new ChangePubDateDto          //#D
                 {                                          //#D
                     BookId = p.BookId,                     //#D

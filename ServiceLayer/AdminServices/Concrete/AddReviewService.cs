@@ -23,6 +23,7 @@ namespace ServiceLayer.AdminServices.Concrete
         public Review GetBlankReview(int id) //#A
         {
             BookTitle = _context.Books     //#B
+                .AsQueryable()
                 .Where(p => p.BookId == id)//#B
                 .Select(p => p.Title)      //#B
                 .Single();                 //#B

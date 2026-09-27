@@ -34,6 +34,7 @@ namespace ServiceLayer.BookServices.Concrete
                     return FormVotesDropDown();
                 case BooksFilterBy.ByTags:
                     return _db.Tags
+                        .AsQueryable()
                         .Select(x => new DropdownTuple
                         {
                             Value = x.TagId,
@@ -42,6 +43,7 @@ namespace ServiceLayer.BookServices.Concrete
                 case BooksFilterBy.ByPublicationYear:
                     var today = DateTime.UtcNow.Date;        //#A
                     var result = _db.Books                   //#B
+                        .AsQueryable()
                         .Where(x => x.PublishedOn <= today)  //#B
                         .Select(x => x.PublishedOn.Year)     //#B
                         .Distinct()                          //#B

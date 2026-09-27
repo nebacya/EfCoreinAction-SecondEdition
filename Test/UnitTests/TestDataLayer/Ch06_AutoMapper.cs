@@ -9,6 +9,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using DataLayer.EfClasses;
 using DataLayer.EfCode;
+using Microsoft.Extensions.Logging;
 using ServiceLayer.AdminServices;
 using ServiceLayer.BookServices;
 using Test.TestHelpers;
@@ -30,12 +31,12 @@ namespace Test.UnitTests.TestDataLayer
 
         public static MapperConfiguration CreateMapperConfig<TSource, TDestination>()
         {
-            return new MapperConfiguration(cfg => cfg.CreateMap<TSource, TDestination>());
+            return new MapperConfiguration(cfg => cfg.CreateMap<TSource, TDestination>(), new LoggerFactory());
         }
 
         public static MapperConfiguration CreateMapperConfigScanTestAutoMap()
         {
-            return new MapperConfiguration(cfg => cfg.AddMaps(Assembly.GetExecutingAssembly()));
+            return new MapperConfiguration(cfg => cfg.AddMaps(Assembly.GetExecutingAssembly()), new LoggerFactory());
         }
 
         [AutoMap(typeof(Book))]
@@ -136,7 +137,7 @@ namespace Test.UnitTests.TestDataLayer
 
         public static MapperConfiguration CreateFromProfileConfig()
         {
-            return new MapperConfiguration(cfg => cfg.AddProfile<BookListDtoProfile>());
+            return new MapperConfiguration(cfg => cfg.AddProfile<BookListDtoProfile>(), new LoggerFactory());
         }
 
         [Fact]

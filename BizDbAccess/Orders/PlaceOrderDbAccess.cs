@@ -39,7 +39,9 @@ namespace BizDbAccess.Orders
             FindBooksByIdsWithPriceOffers               //#B
                (IEnumerable<int> bookIds)               //#C
         {
-            return _context.Books                       //#D
+            return _context.Books 
+                //#D
+                .AsQueryable()
                 .Where(x => bookIds.Contains(x.BookId)) //#D
                 .Include(r => r.Promotion)              //#E
                 .ToDictionary(key => key.BookId);       //#F

@@ -33,7 +33,8 @@ namespace Test.UnitTests.TestDataLayer
                 context.SeedDatabaseFourBooks();
 
                 //ATTEMPT
-                var book = context.Books.AsQueryable()
+                var book = context.Books
+                    .AsQueryable()
                     .Select(p => new
                         {
                             p.BookId, //#A
