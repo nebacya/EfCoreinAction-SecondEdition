@@ -93,7 +93,7 @@ namespace Test.UnitTests.TestDataLayer
 
             //ATTEMPT
             showlog = true;
-            var numReviews = context.Books.SelectMany(x => x.Reviews).Count();
+            var numReviews = context.Books.AsQueryable().SelectMany(x => x.Reviews).Count();
 
             //VERIFY
             numReviews.ShouldEqual(0);

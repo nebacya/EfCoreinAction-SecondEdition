@@ -94,7 +94,7 @@ namespace Test.UnitTests.TestDataLayer
                 //ATTEMPT
                 showLog = true;
                 var dto = context.Books
-                    .Select(p => new ChangePubDateDto
+                    .AsQueryable().Select(p => new ChangePubDateDto
                     {                                
                         BookId = p.BookId,           
                         Title = p.Title,             

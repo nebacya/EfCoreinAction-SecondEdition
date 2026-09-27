@@ -72,7 +72,7 @@ namespace Test.UnitTests.TestDataLayer
                 context.SaveChanges();
 
                 //ATTEMPT
-                var query = context.Persons.Where(x => x.FirstName + x.LastName == "JohnDoe");
+                var query = context.Persons.AsQueryable().Where(x => x.FirstName + x.LastName == "JohnDoe");
                 var person = query.First();
 
                 //VERIFY

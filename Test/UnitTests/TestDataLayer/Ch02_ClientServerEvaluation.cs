@@ -33,7 +33,7 @@ namespace Test.UnitTests.TestDataLayer
                 context.SeedDatabaseFourBooks();
 
                 //ATTEMPT
-                var book = context.Books
+                var book = context.Books.AsQueryable()
                     .Select(p => new
                         {
                             p.BookId, //#A
@@ -67,7 +67,7 @@ namespace Test.UnitTests.TestDataLayer
 
                 //ATTEMPT
                 var us = new CultureInfo("en-US"); //#A 
-                var books = context.Books
+                var books = context.Books.AsQueryable()
                     .Select(p => new
                         {
                             p.Title,
@@ -96,7 +96,7 @@ namespace Test.UnitTests.TestDataLayer
                 context.SeedDatabaseFourBooks();
 
                 //ATTEMPT
-                var ex = Assert.Throws<InvalidOperationException>(() => context.Books
+                var ex = Assert.Throws<InvalidOperationException>(() => context.Books.AsQueryable()
                     .Select(p => new
                         {
                             p.BookId,

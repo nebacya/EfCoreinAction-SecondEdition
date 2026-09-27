@@ -39,7 +39,7 @@ namespace Test.UnitTests.TestDataLayer
             {
                 entityToDetach = tempContext.ManyTops.Single();     //#C
                 var a = tempContext.Set<Many1>()                    //#D
-                    .Where(x => x.ManyTopId == entityToDetach.Id)   //#D
+                    .AsQueryable().Where(x => x.ManyTopId == entityToDetach.Id)   //#D
                     .ToList();                                      //#D
                 //... rest of loads left out to shorten the example
             }                                                       //#E

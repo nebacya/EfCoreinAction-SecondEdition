@@ -63,6 +63,7 @@ namespace Test.UnitTests.TestDataLayer
                 .Single(x => x.BookId == bookId);
             bookWithReviews.Reviews.ShouldBeNull();
             var reviews = context.Set<Review>()
+                .AsQueryable()
                 .Where(x => x.BookId == bookId)
                 .ToList();
 

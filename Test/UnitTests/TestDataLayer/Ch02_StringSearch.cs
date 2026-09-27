@@ -117,13 +117,13 @@ namespace Test.UnitTests.TestDataLayer
 
                 //ATTEMPT
                 var caseSensitivity = CaseSensitivity.NotSet;
-                caseSensitivity = OutputResult(context.Books.Where(x => x.Title == NormalTitle), "==", databaseType, caseSensitivity);
-                caseSensitivity = OutputResult(context.Books.Where(x => x.Title.Equals(NormalTitle)), "Equals", databaseType, caseSensitivity);
-                caseSensitivity = OutputResult(context.Books.Where(x => x.Title.StartsWith("Entity")), "StartsWith", databaseType, caseSensitivity);
-                caseSensitivity = OutputResult(context.Books.Where(x => x.Title.EndsWith("Action")), "EndsWith", databaseType, caseSensitivity);
-                caseSensitivity = OutputResult(context.Books.Where(x => x.Title.Contains("Framework")), "Contains", databaseType, caseSensitivity);
-                caseSensitivity = OutputResult(context.Books.Where(x => x.Title.IndexOf("Entity") == 0), "IndexOf", databaseType, caseSensitivity);
-                caseSensitivity = OutputResult(context.Books.Where(x => EF.Functions.Like(x.Title, NormalTitle)), "Like", databaseType, caseSensitivity);
+                caseSensitivity = OutputResult(context.Books.AsQueryable().Where(x => x.Title == NormalTitle), "==", databaseType, caseSensitivity);
+                caseSensitivity = OutputResult(context.Books.AsQueryable().Where(x => x.Title.Equals(NormalTitle)), "Equals", databaseType, caseSensitivity);
+                caseSensitivity = OutputResult(context.Books.AsQueryable().Where(x => x.Title.StartsWith("Entity")), "StartsWith", databaseType, caseSensitivity);
+                caseSensitivity = OutputResult(context.Books.AsQueryable().Where(x => x.Title.EndsWith("Action")), "EndsWith", databaseType, caseSensitivity);
+                caseSensitivity = OutputResult(context.Books.AsQueryable().Where(x => x.Title.Contains("Framework")), "Contains", databaseType, caseSensitivity);
+                caseSensitivity = OutputResult(context.Books.AsQueryable().Where(x => x.Title.IndexOf("Entity") == 0), "IndexOf", databaseType, caseSensitivity);
+                caseSensitivity = OutputResult(context.Books.AsQueryable().Where(x => EF.Functions.Like(x.Title, NormalTitle)), "Like", databaseType, caseSensitivity);
 
                 return caseSensitivity;
             }
@@ -144,19 +144,19 @@ namespace Test.UnitTests.TestDataLayer
 
                 //ATTEMPT
                 var caseSensitivity = CaseSensitivity.NotSet;
-                caseSensitivity = OutputResult(context.Books.Where(x =>
+                caseSensitivity = OutputResult(context.Books.AsQueryable().Where(x =>
                     EF.Functions.Collate(x.Title, collationName) == NormalTitle), "==", databaseType, caseSensitivity);
-                caseSensitivity = OutputResult(context.Books.Where(x =>
+                caseSensitivity = OutputResult(context.Books.AsQueryable().Where(x =>
                     EF.Functions.Collate(x.Title, collationName).Equals(NormalTitle)), "Equals", databaseType, caseSensitivity);
-                caseSensitivity = OutputResult(context.Books.Where(x =>
+                caseSensitivity = OutputResult(context.Books.AsQueryable().Where(x =>
                     EF.Functions.Collate(x.Title, collationName).StartsWith("Entity")), "StartsWith", databaseType, caseSensitivity);
-                caseSensitivity = OutputResult(context.Books.Where(x =>
+                caseSensitivity = OutputResult(context.Books.AsQueryable().Where(x =>
                     EF.Functions.Collate(x.Title, collationName).EndsWith("Action")), "EndsWith", databaseType, caseSensitivity);
-                caseSensitivity = OutputResult(context.Books.Where(x =>
+                caseSensitivity = OutputResult(context.Books.AsQueryable().Where(x =>
                     EF.Functions.Collate(x.Title, collationName).Contains("Framework")), "Contains", databaseType, caseSensitivity);
-                caseSensitivity = OutputResult(context.Books.Where(x =>
+                caseSensitivity = OutputResult(context.Books.AsQueryable().Where(x =>
                     EF.Functions.Collate(x.Title, collationName).IndexOf("Entity") == 0), "IndexOf", databaseType, caseSensitivity);
-                caseSensitivity = OutputResult(context.Books.Where(x =>
+                caseSensitivity = OutputResult(context.Books.AsQueryable().Where(x =>
                     EF.Functions.Like(EF.Functions.Collate(x.Title, collationName), NormalTitle)), "Like", databaseType, caseSensitivity);
 
                 return caseSensitivity;

@@ -42,7 +42,7 @@ namespace Test.UnitTests.TestServiceLayer
 
             //ATTEMPT
             showLog = true;
-            var averages = context.Books.Select(p =>
+            var averages = context.Books.AsQueryable().Select(p =>
                 p.Reviews.Count == 0 ? null : (decimal?) p.Reviews.Select(q => q.NumStars).Average()).ToList();
 
             //VERIFY
@@ -60,7 +60,7 @@ namespace Test.UnitTests.TestServiceLayer
             context.SeedDatabaseFourBooks();
 
             //ATTEMPT
-            var dtos = context.Books.Select(p => new
+            var dtos = context.Books.AsQueryable().Select(p => new
             {
                 NumReviews = p.Reviews.Count,
                 ReviewsAverageVotes = p.Reviews.Count == 0 ? null : (double?) p.Reviews.Average(q => q.NumStars)
@@ -80,7 +80,7 @@ namespace Test.UnitTests.TestServiceLayer
             context.SeedDatabaseFourBooks();
 
             //ATTEMPT
-            var dtos = context.Books.Select(p => new BookListDto
+            var dtos = context.Books.AsQueryable().Select(p => new BookListDto
             {
                 BookId = p.BookId,
                 Title = p.Title,
@@ -160,25 +160,25 @@ namespace Test.UnitTests.TestServiceLayer
             context.ChangeTracker.Clear();
 
             //ATTEMPT
-            var titles = context.Books.Select(p => p.Title);
-            var orgPrices = context.Books.Select(p => p.Price);
-            var actuaPrice = context.Books.Select(p =>
+            var titles = context.Books.AsQueryable().Select(p => p.Title);
+            var orgPrices = context.Books.AsQueryable().Select(p => p.Price);
+            var actuaPrice = context.Books.AsQueryable().Select(p =>
                 p.Promotion == null
                     ? p.Price
                     : p.Promotion.NewPrice);
-            var pText = context.Books.Select(p =>
+            var pText = context.Books.AsQueryable().Select(p =>
                 p.Promotion == null
                     ? null
                     : p.Promotion.PromotionalText);
             var authorOrdered =
-                context.Books.Select(p =>
+                context.Books.AsQueryable().Select(p =>
                     string.Join(", ",
                         p.AuthorsLink
                             .OrderBy(q => q.Order)
                             .Select(q => q.Author.Name)));
-            var reviewsCount = context.Books.Select(p => p.Reviews.Count);
+            var reviewsCount = context.Books.AsQueryable().Select(p => p.Reviews.Count);
             //The test on there being any reviews is needed because of bug in EF Core V2.0.0, issue #9516
-            var reviewsAverageVotes = context.Books.Select(p =>
+            var reviewsAverageVotes = context.Books.AsQueryable().Select(p =>
                 p.Reviews.Count == 0
                     ? null
                     : (double?) p.Reviews.Average(q => q.NumStars));

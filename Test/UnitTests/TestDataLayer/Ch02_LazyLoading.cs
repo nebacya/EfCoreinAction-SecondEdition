@@ -54,7 +54,7 @@ namespace Test.UnitTests.TestDataLayer
 
             //VERIFY
             book.Promotion.ShouldBeNull();
-            context.BookLazy1s.Select(x => x.Promotion).ShouldNotBeNull();
+            context.BookLazy1s.AsQueryable().Select(x => x.Promotion).ShouldNotBeNull();
             reviews.Count.ShouldEqual(2);
         }
 
@@ -90,7 +90,7 @@ namespace Test.UnitTests.TestDataLayer
 
             //VERIFY
             book.Promotion.ShouldBeNull();
-            context.BookLazy2s.Select(x => x.Promotion).ShouldNotBeNull();
+            context.BookLazy2s.AsQueryable().Select(x => x.Promotion).ShouldNotBeNull();
             reviews.Count.ShouldEqual(2);
         }
 

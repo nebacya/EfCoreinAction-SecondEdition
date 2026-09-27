@@ -272,6 +272,7 @@ namespace Test.UnitTests.TestDataLayer
             //ATTEMPT
             showlog = true;
             var books = context.Books
+                .AsQueryable()
                 .Select(book => new //#A
                     {
                         //#A

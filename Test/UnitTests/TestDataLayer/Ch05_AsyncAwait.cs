@@ -29,6 +29,7 @@ namespace Test.UnitTests.TestDataLayer
 
                 //ATTEMPT
                 var dtos = await context.Books
+                    .AsQueryable()
                     .Select(p => p.BookId.ToString() + "Hello").ToListAsync();
 
                 //VERIFY
@@ -48,7 +49,7 @@ namespace Test.UnitTests.TestDataLayer
                 context.SeedDatabaseFourBooks();
 
                 //ATTEMPT
-                var dtos = await context.Books
+                var dtos = await context.Books.AsQueryable()
                     .Select(p => 
                         string.Join(", ",
                             p.AuthorsLink
@@ -71,7 +72,7 @@ namespace Test.UnitTests.TestDataLayer
 
                 //ATTEMPT
                 var dtos = await context.Books
-                    .Select(p => (double?)p.Reviews
+                    .AsQueryable().Select(p => (double?)p.Reviews
                                     .Average(q => q.NumStars)
                         ).ToListAsync();
 
@@ -105,7 +106,7 @@ namespace Test.UnitTests.TestDataLayer
         {
             return await //#C
                 context.Books
-                .CountAsync(); //#D
+                .AsQueryable().CountAsync(); //#D
         }
         /**********************************************
         #A The 'async Task<T>' is the way we define a method as having an await in it
@@ -116,7 +117,7 @@ namespace Test.UnitTests.TestDataLayer
 
         private Task<int> GetNumBooksTask(EfCoreContext context)
         {
-            return context.Books.CountAsync();
+            return context.Books.AsQueryable().CountAsync();
         }
     }
 }

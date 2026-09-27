@@ -160,7 +160,7 @@ namespace Test.UnitTests.TestDataLayer
             context.ChangeTracker.Clear();
 
             var author1 = context.Books                        //#A
-                .Where(p => p.Title == "Quantum Networking")  //#A
+                .AsQueryable().Where(p => p.Title == "Quantum Networking")  //#A
                 .Select(p => p.AuthorsLink.First().Author)    //#A
                 .Single();                                    //#A
             author1.Name = "Future Person 2";                  //#A
@@ -182,7 +182,7 @@ namespace Test.UnitTests.TestDataLayer
             * *******************************************************/
 
             //VERIFY
-            var authorAgain = context.Books.Where(p => p.Title == "Quantum Networking")
+            var authorAgain = context.Books.AsQueryable().Where(p => p.Title == "Quantum Networking")
                 .Select(p => p.AuthorsLink.First().Author)
                 .Single();
             authorAgain.Name.ShouldEqual("Future Person 2");

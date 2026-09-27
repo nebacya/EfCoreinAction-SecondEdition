@@ -57,7 +57,7 @@ namespace Test.UnitTests.TestDataLayer
                 await context.SaveChangesAsync();
 
                 //ATTEMPT
-                var books = await context.Books.ToListAsync();
+                var books = await context.Books.AsQueryable().ToListAsync();
 
                 //VERIFY
                 books.Count.ShouldEqual(4);
@@ -79,7 +79,7 @@ namespace Test.UnitTests.TestDataLayer
                 await context.SaveChangesAsync();
 
                 //ATTEMPT
-                var result = await context.Books.Select(p => 
+                var result = await context.Books.AsQueryable().Select(p => 
                     new BookListDto
                     {
                         ActualPrice = p.Promotion == null

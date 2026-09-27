@@ -45,13 +45,13 @@ namespace Test.UnitTests.TestDataLayer
             {
                 //ATTEMPT
                 RunTest(context, 1, "First access, synch:", (c, id) => c.Books.Single(x => x.BookId == id));
-                await Task.WhenAll(RunTestAsync(context, 1, "First access, async:", (c, id) => c.Books.SingleAsync(x => x.BookId == id)));
+                await Task.WhenAll(RunTestAsync(context, 1, "First access, async:", (c, id) => c.Books.AsQueryable().SingleAsync(x => x.BookId == id)));
 
-                await Task.WhenAll(RunTestAsync(context, 1, "1 access, async:", (c, id) => c.Books.SingleAsync(x => x.BookId == id)));
-                await Task.WhenAll(RunTestAsync(context, 100, "100 access, async:", (c, id) => c.Books.SingleAsync(x => x.BookId == id)));
+                await Task.WhenAll(RunTestAsync(context, 1, "1 access, async:", (c, id) => c.Books.AsQueryable().SingleAsync(x => x.BookId == id)));
+                await Task.WhenAll(RunTestAsync(context, 100, "100 access, async:", (c, id) => c.Books.AsQueryable().SingleAsync(x => x.BookId == id)));
                 RunTest(context, 1, "1 access, synch:", (c, id) => c.Books.Single(x => x.BookId == id));
                 RunTest(context, 100, "100 access, synch:", (c, id) => c.Books.Single(x => x.BookId == id));
-                await Task.WhenAll(RunTestAsync(context, 100, "100 access, async:", (c, id) => c.Books.SingleAsync(x => x.BookId == id)));
+                await Task.WhenAll(RunTestAsync(context, 100, "100 access, async:", (c, id) => c.Books.AsQueryable().SingleAsync(x => x.BookId == id)));
                 RunTest(context, 100, "100 access, synch:", (c, id) => c.Books.Single(x => x.BookId == id));
             }
             //VERIFY
@@ -134,15 +134,15 @@ namespace Test.UnitTests.TestDataLayer
             using (var context = new EfCoreContext(_options))
             {
                 //ATTEMPT
-                RunTest(context, 1, "First access, synch:", (c, id) => c.Books.Where(x => x.Reviews.Count > 3).OrderByDescending(x => x.Price).Take(10).ToList());
-                await Task.WhenAll(RunTestAsync(context, 1, "First access, async:", (c, id) => c.Books.Where(x => x.Reviews.Count > 3).OrderByDescending(x => x.Price).Take(10).ToListAsync()));
+                RunTest(context, 1, "First access, synch:", (c, id) => c.Books.AsQueryable().Where(x => x.Reviews.Count > 3).OrderByDescending(x => x.Price).Take(10).ToList());
+                await Task.WhenAll(RunTestAsync(context, 1, "First access, async:", (c, id) => c.Books.AsQueryable().Where(x => x.Reviews.Count > 3).OrderByDescending(x => x.Price).Take(10).ToListAsync()));
 
-                await Task.WhenAll(RunTestAsync(context, 1, "1 access, async:", (c, id) => c.Books.Where(x => x.Reviews.Count > 3).OrderByDescending(x => x.Price).Take(10).ToListAsync()));
-                await Task.WhenAll(RunTestAsync(context, 100, "100 access, async:", (c, id) => c.Books.Where(x => x.Reviews.Count > 3).OrderByDescending(x => x.Price).Take(10).ToListAsync()));
-                RunTest(context, 1, "1 access, synch:", (c, id) => c.Books.Where(x => x.Reviews.Count > 3).OrderByDescending(x => x.Price).Take(10).ToList());
-                RunTest(context, 100, "100 access, synch:", (c, id) => c.Books.Where(x => x.Reviews.Count > 3).OrderByDescending(x => x.Price).Take(10).ToList());
-                await Task.WhenAll(RunTestAsync(context, 100, "100 access, async:", (c, id) => c.Books.Where(x => x.Reviews.Count > 3).OrderByDescending(x => x.Price).Take(10).ToListAsync()));
-                RunTest(context, 100, "100 access, synch:", (c, id) => c.Books.Where(x => x.Reviews.Count > 3).OrderByDescending(x => x.Price).Take(10).ToList());
+                await Task.WhenAll(RunTestAsync(context, 1, "1 access, async:", (c, id) => c.Books.AsQueryable().Where(x => x.Reviews.Count > 3).OrderByDescending(x => x.Price).Take(10).ToListAsync()));
+                await Task.WhenAll(RunTestAsync(context, 100, "100 access, async:", (c, id) => c.Books.AsQueryable().Where(x => x.Reviews.Count > 3).OrderByDescending(x => x.Price).Take(10).ToListAsync()));
+                RunTest(context, 1, "1 access, synch:", (c, id) => c.Books.AsQueryable().Where(x => x.Reviews.Count > 3).OrderByDescending(x => x.Price).Take(10).ToList());
+                RunTest(context, 100, "100 access, synch:", (c, id) => c.Books.AsQueryable().Where(x => x.Reviews.Count > 3).OrderByDescending(x => x.Price).Take(10).ToList());
+                await Task.WhenAll(RunTestAsync(context, 100, "100 access, async:", (c, id) => c.Books.AsQueryable().Where(x => x.Reviews.Count > 3).OrderByDescending(x => x.Price).Take(10).ToListAsync()));
+                RunTest(context, 100, "100 access, synch:", (c, id) => c.Books.AsQueryable().Where(x => x.Reviews.Count > 3).OrderByDescending(x => x.Price).Take(10).ToList());
             }
         }
         
@@ -191,7 +191,7 @@ namespace Test.UnitTests.TestDataLayer
 
         private async Task MultipleSmallAsync(EfCoreContext context, int id)
         {
-            var book = await context.Books.SingleAsync(x => x.BookId == id);
+            var book = await context.Books.AsQueryable().SingleAsync(x => x.BookId == id);
             await context.Entry(book).Collection(c => c.AuthorsLink).LoadAsync();
             foreach (var authorLink in book.AuthorsLink)
             {
