@@ -42,6 +42,7 @@ namespace BookApp
                 .GetConnectionString("DefaultConnection"); //#C
 
             services.AddDbContext<EfCoreContext>(             //#D
+                // options => options.UseSqlite(connection)); //#D
                 options => options.UseSqlServer(connection)); //#D
 
             services.AddHttpContextAccessor();
@@ -55,7 +56,7 @@ namespace BookApp
         #A This method in the Startup class sets up services
         #B Sets up a series of services to use with controllers and Views
         #C You get the connection string from the appsettings.json file, which can be changed when you deploy.
-        #D Configures the application’s DbContext to use SQL Server and provide the connection         
+        #D Configures the applicationï¿½s DbContext to use SQL Server and provide the connection         
          ****************************************************************/
 
 

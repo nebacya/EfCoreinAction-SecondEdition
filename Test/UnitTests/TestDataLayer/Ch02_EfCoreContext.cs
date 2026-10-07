@@ -78,7 +78,10 @@ namespace Test.UnitTests.TestDataLayer
 
                 //ATTEMPT
                 var books = EfTestData.CreateFourBooks();
+                var state = context.Entry(books[0]).State;
+                
                 context.Books.AddRange(books);
+                state = context.Entry(books[0]).State;
                 context.SaveChanges();
 
                 //VERIFY

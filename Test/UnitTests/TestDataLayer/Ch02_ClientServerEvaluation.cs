@@ -26,11 +26,17 @@ namespace Test.UnitTests.TestDataLayer
         public void TestClientServerComplexBookOk()
         {
             //SETUP
-            var options = SqliteInMemory.CreateOptions<EfCoreContext>();
+            var options = SqliteInMemory.CreateOptions<EfCoreContext>(builder =>
+            {
+                builder.LogTo(_output.WriteLine);
+            });
+            
             using (var context = new EfCoreContext(options))
             {
                 context.Database.EnsureCreated();
                 context.SeedDatabaseFourBooks();
+                
+                _output.WriteLine("Start processing");
 
                 //ATTEMPT
                 var book = context.Books
@@ -45,7 +51,9 @@ namespace Test.UnitTests.TestDataLayer
                                     .OrderBy(q => q.Order) //#A
                                     .Select(q => q.Author.Name)), //#A
                         }
-                    ).First();
+                    )
+                    // .OrderBy(b => b.AuthorsString)
+                    .First();
                 /*********************************************************
                 #A These parts of the select can be converted to SQL and run on the server
                 #B The String.Join is executed on the client in software

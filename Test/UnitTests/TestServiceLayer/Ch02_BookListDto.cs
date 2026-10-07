@@ -203,7 +203,10 @@ namespace Test.UnitTests.TestServiceLayer
             context.SeedDatabaseFourBooks();
 
             //ATTEMPT
-            var dtos = context.Books.MapBookToDto().OrderByDescending(x => x.BookId).ToList();
+            var dtos = context.Books
+                .MapBookToDto()
+                .OrderByDescending(x => x.BookId)
+                .ToList();
 
             //VERIFY
             dtos.First().BookId.ShouldNotEqual(0);
